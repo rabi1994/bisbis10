@@ -22,10 +22,6 @@ public class DishesController {
         this.restaurantService = restaurantService;
     }
 
-    @GetMapping
-    public List<Dish> getDishesByRestaurantId(@PathVariable Long restaurantId){
-        return dishesService.getDishesByRestaurantId(restaurantId);
-    }
 
     @PostMapping
     public ResponseEntity<String> addNewDish(@PathVariable Long restaurantId,
@@ -36,15 +32,21 @@ public class DishesController {
         return ResponseEntity.status(HttpStatus.CREATED).body("New dish created successfully");
     }
 
-    @PutMapping(path = "{dishId}")
-    public void updateRestaurantDish(@PathVariable Long restaurantId, @PathVariable Long dishId,
-                                     @RequestBody Dish dish){
-        dishesService.updateDishDescriptionOrPrice(restaurantId, dishId, dish);
-    }
+
 
     @DeleteMapping("{dishId}")
     public ResponseEntity<Void> deleteDish(@PathVariable Long restaurantId, @PathVariable Long dishId){
         dishesService.deleteDish(restaurantId, dishId);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping
+    public List<Dish> getDishesByRestaurantId(@PathVariable Long restaurantId){
+        return dishesService.getDishesByRestaurantId(restaurantId);
+    }
+    @PutMapping(path = "{dishId}")
+    public void updateRestaurantDish(@PathVariable Long restaurantId, @PathVariable Long dishId,
+                                     @RequestBody Dish dish){
+        dishesService.updateDishDescriptionOrPrice(restaurantId, dishId, dish);
+    }
+
 }

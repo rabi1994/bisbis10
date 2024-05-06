@@ -18,7 +18,19 @@ public class Rating {
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
     private Restaurant restaurant;
 
+
+    @Transient
+    @JsonProperty("restaurantId")
+    private Long tempRestaurantId;
     private Float rating;
+
+    public Long getTempRestaurantId() {
+        return tempRestaurantId;
+    }
+
+    public void setTempRestaurantId(Long tempRestaurantId) {
+        this.tempRestaurantId = tempRestaurantId;
+    }
 
     public long getRatingId() {
         return ratingId;

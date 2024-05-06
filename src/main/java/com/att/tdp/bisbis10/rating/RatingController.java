@@ -20,10 +20,9 @@ public class RatingController
         this.ratingService = ratingService;
         this.restaurantService = restaurantService;
     }
-    @PostMapping("/add")
-    public ResponseEntity addRating(@RequestBody Rating rating) {
+    @PostMapping
+    public void addRating(@RequestBody Rating rating){
         ratingService.addRating(rating);
-        return new ResponseEntity(HttpStatus.ACCEPTED);
-        }
+    }
 }
 

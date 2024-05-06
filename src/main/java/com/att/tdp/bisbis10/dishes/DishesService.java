@@ -17,13 +17,7 @@ public class DishesService {
         this.dishesRepository = dishesRepository;
     }
 
-    public List<Dish> getDishesByRestaurantId(Long restaurantId) {
-        Optional<List<Dish>> dishes = dishesRepository.findDishesByRestaurantId(restaurantId);
-        if (dishes.isEmpty()){
-            throw new IllegalStateException("Restaurant dose not have any dishes");
-        }
-        return dishesRepository.findDishesByRestaurantId(restaurantId).get();
-    }
+
 
     public void addNewDish(Dish dishes) {
         dishesRepository.save(dishes);
@@ -31,14 +25,30 @@ public class DishesService {
     public Dish getDishByRestaurantIdAndDishId(Long restaurantId, Long dishId){
         Optional<Dish> dishesOptional = dishesRepository.findDishesByRestaurantIdAndDishId(restaurantId, dishId);
         if (dishesOptional.isEmpty()){
-            throw new IllegalStateException("Dish dose not exist in this restaurant");
+            throw new IllegalStateException("no dishes has been found!");
         }
         return dishesOptional.get();
+    }
+
+    public List<Dish> getDishesByRestaurantId(Long restaurantId) {
+        Optional<List<Dish>> dishes = dishesRepository.findDishesByRestaurantId(restaurantId);
+        if (dishes.isEmpty()){
+            throw new IllegalStateException("no dishes has been found!");
+        }
+        return dishesRepository.findDishesByRestaurantId(restaurantId).get();
+    }
+
+    public void deleteDish(Long restaurantId, Long dishId) {
+        Optional<Dish> dish = dishesRepository.findDishesByRestaurantIdAndDishId(restaurantId, dishId);
+        if (dish.isEmpty()){
+            throw new IllegalStateException("the following dish not found");
+        }
+        dishesRepository.delete(dish.get());
     }
     public void updateDishDescriptionOrPrice(Long restaurantId, Long dishId, Dish dish) {
         Optional<Dish> dishesOptional = dishesRepository.findDishesByRestaurantIdAndDishId(restaurantId, dishId);
         if (dishesOptional.isEmpty()){
-            throw new IllegalStateException("Dish dose not exist in this restaurant");
+            throw new IllegalStateException("no dishes has been found!");
         }
         Dish originalDish = dishesOptional.get();
         if (dish.getName() != null & !Objects.equals(originalDish.getName(), dish.getName())){
@@ -53,11 +63,4 @@ public class DishesService {
         dishesRepository.save(originalDish);
     }
 
-    public void deleteDish(Long restaurantId, Long dishId) {
-        Optional<Dish> dish = dishesRepository.findDishesByRestaurantIdAndDishId(restaurantId, dishId);
-        if (dish.isEmpty()){
-            throw new IllegalStateException("Dish dose not exist in this restaurant");
-        }
-        dishesRepository.delete(dish.get());
-    }
 }

@@ -1,7 +1,6 @@
 package com.att.tdp.bisbis10.order;
 
 import com.att.tdp.bisbis10.dishes.DishesService;
-import com.att.tdp.bisbis10.orderItem.OrderItem;
 import com.att.tdp.bisbis10.restaurant.Restaurant;
 import com.att.tdp.bisbis10.restaurant.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +23,21 @@ public class OrderService {
         this.dishesService = dishesService;
     }
 
+    public List<Order> getOrdersByRestaurantId(Long restaurantId) {
+        Optional<List<Order>> orderOptional = orderRepository.findOrdersByRestaurantId(restaurantId);
+        if (orderOptional.isEmpty()){
+            throw new IllegalStateException("no order found for this restaurant");
+        }
+        return orderOptional.get();
+    }
     public List<Order> getAllOrders() {
+
         return orderRepository.findAll();
     }
+
+
+
+
 
     public void addNewOrder(Order order) {
         Restaurant restaurant = restaurantService.getRestaurantById(order.getTempRestaurantId());
@@ -35,13 +46,5 @@ public class OrderService {
             orderItem.setDish(dishesService.getDishByRestaurantIdAndDishId(order.getRestaurant().getId(), orderItem.getTempDishId()));
         }
         orderRepository.save(order);
-    }
-
-    public List<Order> getOrdersByRestaurantId(Long restaurantId) {
-        Optional<List<Order>> orderOptional = orderRepository.findOrdersByRestaurantId(restaurantId);
-        if (orderOptional.isEmpty()){
-            throw new IllegalStateException("Restaurant dose not have any orders");
-        }
-        return orderOptional.get();
     }
 }

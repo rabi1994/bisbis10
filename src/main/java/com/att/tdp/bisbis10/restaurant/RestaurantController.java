@@ -22,6 +22,11 @@ public class RestaurantController {
         return ResponseEntity.status(HttpStatus.CREATED).body("New restaurant created successfully");
     }
 
+    @PutMapping(path = "{restaurantId}")
+    public void updateRestaurant(@PathVariable("restaurantId") Long restaurantId,
+                                 @RequestBody(required= true) Restaurant restaurant){
+        restaurantService.updateRestaurant(restaurantId, restaurant);
+    }
     @GetMapping
     public List<Restaurant> getAllRestaurants(@RequestParam(required = false) String cuisine) {
         if(cuisine != null)
@@ -29,10 +34,6 @@ public class RestaurantController {
         return restaurantService.getAllRestaurants();
     }
 
-    @GetMapping("/{id}")
-    public Restaurant getRestaurantById(@PathVariable Long id) {
-        return restaurantService.getRestaurantById(id);
-    }
 
 
     @DeleteMapping(path = "{restaurantId}")
@@ -40,9 +41,10 @@ public class RestaurantController {
         restaurantService.deleteRestaurant(restaurantId);
         return ResponseEntity.noContent().build();
     }
-    @PutMapping(path = "{restaurantId}")
-    public void updateRestaurant(@PathVariable("restaurantId") Long restaurantId,
-                                 @RequestBody(required= true) Restaurant restaurant){
-        restaurantService.updateRestaurant(restaurantId, restaurant);
+
+    @GetMapping("/{id}")
+    public Restaurant getRestaurantById(@PathVariable Long id) {
+        return restaurantService.getRestaurantById(id);
     }
+
 }

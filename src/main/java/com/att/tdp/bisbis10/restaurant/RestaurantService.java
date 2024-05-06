@@ -40,17 +40,12 @@ public class RestaurantService {
         return restaurantRepository.findById(restaurantId).orElse(null);
     }
 
-    public void deleteRestaurant(Long restaurantId) {
-        if (!restaurantRepository.existsById(restaurantId)){
-            throw new IllegalStateException("Restaurant with id " + restaurantId + " dose not exists");
-        }
-        restaurantRepository.deleteById(restaurantId);
-    }
+
     @Transactional
     public void updateRestaurant(Long restaurantId, Restaurant restaurant) {
         Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(restaurantId);
         if (optionalRestaurant.isEmpty()){
-            throw new IllegalStateException("There is no restaurants with the id of " + restaurantId);
+            throw new IllegalStateException("no restaurants found!");
         }
         Restaurant originalRestaurant = optionalRestaurant.get();
         if (restaurant.getName() != null & !Objects.equals(originalRestaurant.getName(), restaurant.getName())){
@@ -65,6 +60,11 @@ public class RestaurantService {
         restaurantRepository.save(originalRestaurant);
     }
 
+    public void deleteRestaurant(Long restaurantId) {
+        if (!restaurantRepository.existsById(restaurantId)){
+            throw new IllegalStateException("no restaurants found!");
+        }
+        restaurantRepository.deleteById(restaurantId);
+    }
 
-    // Other methods as needed (e.g., findById, deleteById, updateRestaurant, etc.)
 }

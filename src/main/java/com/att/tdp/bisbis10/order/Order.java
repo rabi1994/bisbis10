@@ -1,6 +1,5 @@
 package com.att.tdp.bisbis10.order;
 
-import com.att.tdp.bisbis10.orderItem.OrderItem;
 import com.att.tdp.bisbis10.restaurant.Restaurant;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;

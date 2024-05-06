@@ -114,14 +114,6 @@ public class Restaurant {
         this.isKosher = isKosher;
         this.cuisines = cuisines;
     }
-    @Override
-    public String toString() {
-        return "Restaurant{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", isKosher=" + isKosher +
-                ", cuisines=" + cuisines +
-                '}';
-    }
+
     
 }

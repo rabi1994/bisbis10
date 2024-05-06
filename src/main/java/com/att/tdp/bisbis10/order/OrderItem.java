@@ -1,4 +1,4 @@
-package com.att.tdp.bisbis10.orderItem;
+package com.att.tdp.bisbis10.order;
 
 
 import com.att.tdp.bisbis10.dishes.Dish;

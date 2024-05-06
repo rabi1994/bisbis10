@@ -10,6 +10,9 @@ import jakarta.persistence.*;
 @IdClass(DishId.class)
 public class Dish {
 
+    private String name;
+    private String description;
+    private Integer price;
     @Id
     @SequenceGenerator(
             name = "dish_sequence",
@@ -27,9 +30,7 @@ public class Dish {
     @JoinColumn(name = "fk_restaurant_id")
     @JsonIgnore
     private Restaurant restaurant;
-    private String name;
-    private String description;
-    private Integer price;
+
 
     public Dish() {
     }
@@ -83,13 +84,5 @@ public class Dish {
         this.restaurant = restaurant;
     }
 
-    @Override
-    public String toString() {
-        return "Dishes{" +
-                "dishId=" + dishId +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                '}';
-    }
+
 }

@@ -5,7 +5,6 @@ import com.att.tdp.bisbis10.restaurant.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,14 +18,13 @@ public class RatingService {
         this.restaurantRepository = restaurantRepository;
     }
 
-    public void addRating(Rating rating) {
-        Optional<Restaurant> restaurant = restaurantRepository.findById(rating.getRestaurant().getId());
+    public void addRating(Rating rating){
+        Optional<Restaurant> restaurant = restaurantRepository.findById(rating.getTempRestaurantId());
         if (restaurant.isEmpty()){
-            throw new IllegalStateException("Restaurant rating dose not have rating");
+            throw new IllegalStateException("restaurant not found!");
         }
         rating.setRestaurant(restaurant.get());
         ratingRepository.save(rating);
-
     }
 
 }
